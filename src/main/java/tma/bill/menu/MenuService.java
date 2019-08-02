@@ -23,12 +23,12 @@ public class MenuService {
     this.menuRepository = menuRepository;
   }
 
-  MenuModel create(@NotNull MenuModel menu) {
+  MenuItem create(@NotNull MenuItem menu) {
     try {
       if (menu.getId() != null) {
         throw new BadRequestResponse("Menu id should not existed.");
       }
-      List<MenuModel> existed = menuRepository.findByName(menu.getName());
+      List<MenuItem> existed = menuRepository.findByName(menu.getName());
       if (existed != null && existed.size()>0) {
         throw new BadRequestResponse("Menu " + menu.getName() + " already existed.");
       }
@@ -51,29 +51,29 @@ public class MenuService {
     }
   }
 
-  MenuModel find(@NotNull Integer id) {
-    Optional<MenuModel> menu = this.menuRepository
+  MenuItem find(@NotNull Integer id) {
+    Optional<MenuItem> menu = this.menuRepository
         .findById(id);
     return menu.orElseThrow(() -> new NotFoundResponse("Menu" + id + " not found"));
   }
 
-  void update(MenuModel menu) {
+  void update(MenuItem menu) {
     menuRepository.save(menu);
   }
 
-  Page<MenuModel> findAll(Pageable pageable) {
+  Page<MenuItem> findAll(Pageable pageable) {
     return menuRepository.findAll(pageable);
   }
 
-  public Page<MenuModel> search(String keyword, Pageable pageable) {
+  public Page<MenuItem> search(String keyword, Pageable pageable) {
     return menuRepository.findByNameContainingOrTagsContaining(keyword, keyword, pageable);
   }
 
-  public Iterable<MenuModel> search(String keyword) {
+  public Iterable<MenuItem> search(String keyword) {
     return menuRepository.findByNameContainingOrTagsContaining(keyword, keyword);
   }
 
-  public Iterable<MenuModel> findAll() {
+  public Iterable<MenuItem> findAll() {
     return menuRepository.findAll();
   }
 }

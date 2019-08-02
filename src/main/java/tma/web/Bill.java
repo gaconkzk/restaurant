@@ -1,39 +1,57 @@
 package tma.web;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import tma.bill.BillModel;
-import tma.bill.menu.MenuModel;
+import tma.bill.BillOrder;
 
 import java.util.Date;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 public class Bill {
   Integer id;
-  Integer billNo;
-  String menu;
-  Integer menu_id;
-  Integer quantity;
-  Date orderedTime;
+  Integer totalPrice;
+  Set<Order> orders;
 
-  public static Bill fromModel(BillModel billModel) {
+  @Data
+  @AllArgsConstructor
+  static
+  class Order {
+    String menu;
+    Integer quantity;
+    Date orderedDate;
+    @JsonIgnore
+    Integer total;
+  }
+
+  public static Bill fromModel(BillOrder billModel) {
     Bill b = new Bill();
     b.id = billModel.getId();
-    b.billNo = billModel.getOrderNo();
-    b.menu_id = billModel.getMenu().getId();
-    b.menu = billModel.getMenu().getName();
-    b.quantity = billModel.getQuantity();
-    b.orderedTime = billModel.getDate();
+
+    b.orders = billModel.getBuildOrderMenus().stream()
+        .map(buildOrderMenu -> {
+          String menu = buildOrderMenu.getId().getMenu().getName();
+          Integer price = buildOrderMenu.getId().getMenu().getPrice();
+          Integer quantity = buildOrderMenu.getQuantity();
+          Date orderedDate = buildOrderMenu.getOrderedDate();
+          return new Order(menu, quantity, orderedDate, price*quantity);
+        }).collect(Collectors.toSet());
+
+    b.totalPrice = b.orders.stream()
+        .map(o -> o.total).reduce((a, i) -> a += i).orElse(0);
 
     return b;
   }
 
-  public BillModel createModel() {
-    return new BillModel(
-        id,
-        billNo,
-        new MenuModel(menu_id, menu),
-        quantity,
-        this.orderedTime
-    );
-  }
+//  public BillModel createModel() {
+//    return new BillModel(
+//        id,
+//        billNo,
+//        new MenuModel(menu_id, menu),
+//        quantity,
+//        this.orderedTime
+//    );
+//  }
 }

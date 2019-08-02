@@ -6,11 +6,11 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
-public interface MenuRepository extends PagingAndSortingRepository<MenuModel, Integer> {
-  Page<MenuModel> findAll(Pageable pageable);
-  Page<MenuModel> findByNameContainingOrTagsContaining(String keyword1, String keyword2, Pageable pageable);
+public interface MenuRepository extends PagingAndSortingRepository<MenuItem, Integer> {
+  Page<MenuItem> findAll(Pageable pageable);
+  Page<MenuItem> findByNameContainingOrTagsContaining(String keyword1, String keyword2, Pageable pageable);
 
-  List<MenuModel> findByName(String name);
+  List<MenuItem> findByName(String name);
 
-  Iterable<MenuModel> findByNameContainingOrTagsContaining(String keyword1, String keyword2);
+  Iterable<MenuItem> findByNameContainingOrTagsContaining(String keyword1, String keyword2);
 }

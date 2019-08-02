@@ -9,14 +9,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import tma.RestaurantApplication;
-import tma.bill.menu.MenuModel;
 import tma.web.Bill;
 import tma.web.Pager;
 
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-import static java.awt.SystemColor.menu;
 
 @Component
 public class BillHandler {
@@ -31,10 +28,10 @@ public class BillHandler {
     String sizeStr = context.queryParam("size");
     if (pageStr!=null && sizeStr != null) {
       Pageable pageable = PageRequest.of(Integer.parseInt(pageStr) -1, Integer.parseInt(sizeStr));
-      Page<BillModel> bills = service.findAll(pageable);
+      Page<BillOrder> bills = service.findAll(pageable);
       context.json(Pager.fromBill(bills)).status(200);
     } else {
-      Iterable<BillModel> bills = service.findAll();
+      Iterable<BillOrder> bills = service.findAll();
 
       context.json(
           StreamSupport.stream(bills.spliterator(), false)
@@ -46,9 +43,9 @@ public class BillHandler {
 
   public void create(Context context) {
     try {
-      Bill bill = context.bodyAsClass(Bill.class);
-      BillModel billModel = service.create(bill.createModel());
-      context.json(Bill.fromModel(billModel)).status(200);
+//      Bill bill = context.bodyAsClass(Bill.class);
+//      BillModel billModel = service.create(bill.createModel());
+//      context.json(Bill.fromModel(billModel)).status(200);
     } catch (BadRequestResponse ex) {
       RestaurantApplication.LOG.error(ex.getMessage(), ex);
     }
@@ -60,7 +57,7 @@ public class BillHandler {
 
   public void getOne(Context context) {
     Integer id = Integer.valueOf(context.pathParam("bill-id"));
-    BillModel bill = this.service.find(id).orElseThrow(() -> new NotFoundResponse("Bill number " + id + " not existed."));
-    context.json(Bill.fromModel(bill)).status(200);
+    BillOrder bill = this.service.find(id).orElseThrow(() -> new NotFoundResponse("Bill number " + id + " not existed."));
+//    context.json(Bill.fromModel(bill)).status(200);
   }
 }

@@ -24,7 +24,7 @@ public class MenuHandler implements CrudHandler {
   @Override
   public void create(@NotNull Context context) {
     try {
-      MenuModel menu = context.bodyAsClass(MenuModel.class);
+      MenuItem menu = context.bodyAsClass(MenuItem.class);
       menu = service.create(menu);
       context.json(menu).status(200);
     } catch (BadRequestResponse ex) {
@@ -42,13 +42,13 @@ public class MenuHandler implements CrudHandler {
   @Override
   public void getOne(@NotNull Context context, @NotNull String s) {
     Integer id = Integer.valueOf(context.pathParam("menu-id"));
-    MenuModel menu = this.service.find(id);
+    MenuItem menu = this.service.find(id);
     context.json(menu).status(200);
   }
 
   @Override
   public void update(@NotNull Context context, @NotNull String s) {
-    MenuModel menu = context.bodyAsClass(MenuModel.class);
+    MenuItem menu = context.bodyAsClass(MenuItem.class);
     this.service.update(menu);
     context.json(menu).status(200);
   }
@@ -59,24 +59,24 @@ public class MenuHandler implements CrudHandler {
     String sizeStr = context.queryParam("size");
     if (pageStr!=null && sizeStr != null) {
       Pageable pageable = PageRequest.of(Integer.parseInt(pageStr) -1, Integer.parseInt(sizeStr));
-      Page<MenuModel> menus = service.findAll(pageable);
+      Page<MenuItem> menus = service.findAll(pageable);
       context.json(Pager.fromMenu(menus)).status(200);
     } else {
-      Iterable<MenuModel> menus = service.findAll();
+      Iterable<MenuItem> menus = service.findAll();
       context.json(menus).status(200);
     }
   }
 
   public void search(@NotNull Context context) {
-    String pageStr = context.queryParam("page");
-    String sizeStr = context.queryParam("size");
-    if (pageStr!=null && sizeStr != null) {
-      Pageable pageable = PageRequest.of(Integer.parseInt(pageStr) -1, Integer.parseInt(sizeStr));
-      Page<MenuModel> menus = service.search(context.queryParam("keyword"), pageable);
-      context.json(Pager.fromMenu(menus)).status(200);
-    } else {
-      Iterable<MenuModel> menus = service.search(context.queryParam("keyword"));
-      context.json(menus).status(200);
-    }
+//    String pageStr = context.queryParam("page");
+//    String sizeStr = context.queryParam("size");
+//    if (pageStr!=null && sizeStr != null) {
+//      Pageable pageable = PageRequest.of(Integer.parseInt(pageStr) -1, Integer.parseInt(sizeStr));
+//      Page<MenuItem> menus = service.search(context.queryParam("keyword"), pageable);
+//      context.json(Pager.fromMenu(menus)).status(200);
+//    } else {
+//      Iterable<MenuItem> menus = service.search(context.queryParam("keyword"));
+//      context.json(menus).status(200);
+//    }
   }
 }
