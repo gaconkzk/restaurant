@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 4
+    url: jdbc:postgresql://localhost:5433/restaurant
+    username: restaurant_auth
+    password: re5t@urant_Auth
+  jpa:
+    properties.hibernate.jdbc.lob.non_contextual_creation: true
+    hibernate:
+      # we won't do this in a production service - we need to use sql files to create/alter tables.
+      # the database will be reset each time we restart the service
+      # this is for demo purpose
+      ddl-auto: create
+

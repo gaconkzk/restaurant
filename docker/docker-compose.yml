@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  db:
+    container_name: restaurant_db
+    image: postgres
+    restart: always
+    hostname: restaurant_db
+    environment:
+      POSTGRES_USER: restaurant_auth
+      POSTGRES_PASSWORD: re5t@urant_Auth
+      POSTGRES_DB: restaurant
+    ports:
+      - 5433:5432
+#    volumes:
+#      - flies_postgres:/var/lib/postgresql/data

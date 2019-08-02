@@ -1,0 +1,49 @@
+@startuml
+
+'skinparam linetype polyline
+sprite $primary [17x12/16z] bOqv3e1030CJRzPn9Fx_NWY7n4eqJ3TJs6OVa5pTpD-5tl3YyFHG-4DsqAOnWgawWp0r0KGagDuGMYMJxbMrBxzLPJ_O0G00
+
+!define table(x) class x << (T,#FFAAAA) >>
+!define pk(x) <$primary> <u>x</u>
+!define fk(x) <&key> <i>x</i>
+
+hide methods
+hide stereotypes
+
+table(Menu) {
+  +pk(id)
+  +name: String
+  +description: String?
+  +image: String?
+  +price: Number
+}
+
+table(Tag) {
+  +pk(id)
+  +name
+}
+
+table(TagMenu) {
+  +pk(id)
+  +fk(menu_id)
+  +fk(tag_id)
+}
+
+TagMenu::menu_id --> "n" Menu::id
+TagMenu::tag_id --> "n" Tag::id
+
+table(Bill) {
+  +pk(id)
+}
+
+table(BillMenu) {
+  +pk(id)
+  +fk(menu_id)
+  +fk(bill_id)
+  +quantity: Number
+  +ordered_time: DateTime
+}
+
+BillMenu::menu_id --> "n" Menu::id
+BillMenu::bill_id --> Bill::id
+@enduml
