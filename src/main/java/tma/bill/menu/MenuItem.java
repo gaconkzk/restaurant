@@ -37,7 +37,7 @@ public class MenuItem {
     this.tags = String.join(",", tags);
   }
 
-  @OneToMany(mappedBy = "id.menu", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
   @JsonIgnore
   private Set<BillOrderMenu> billOrderMenus;
 

@@ -32,8 +32,8 @@ public class Bill {
 
     b.orders = billModel.getBuildOrderMenus().stream()
         .map(buildOrderMenu -> {
-          String menu = buildOrderMenu.getId().getMenu().getName();
-          Integer price = buildOrderMenu.getId().getMenu().getPrice();
+          String menu = buildOrderMenu.getMenu().getName();
+          Integer price = buildOrderMenu.getMenu().getPrice();
           Integer quantity = buildOrderMenu.getQuantity();
           Date orderedDate = buildOrderMenu.getOrderedDate();
           return new Order(menu, quantity, orderedDate, price*quantity);

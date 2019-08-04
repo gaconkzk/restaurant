@@ -1,4 +1,11 @@
-package tma.utils;
+package tma.components;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import tma.RestaurantApplication;
 import tma.bill.BillOrder;
@@ -7,12 +14,19 @@ import tma.bill.BillRepository;
 import tma.bill.menu.MenuItem;
 import tma.bill.menu.MenuRepository;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
+@Component
+public class DBInitializer {
+  private MenuRepository menuRepo;
 
-public class DatabaseUtils {
-  public static void initDB(BillRepository billRepo, MenuRepository menuRepo) {
+  private BillRepository billRepo;
+
+  @Autowired
+  public void DBInitializer(MenuRepository menuRepository, BillRepository billRepository) {
+      this.menuRepo = menuRepository;
+      this.billRepo = billRepository;
+  }
+
+  public void init() {
     MenuItem menu1 = new MenuItem(
         1,
         "Hawaiian Pizza",
