@@ -1,5 +1,7 @@
 package tma.components;
 
+import io.javalin.plugin.openapi.OpenApiOptions;
+import io.javalin.plugin.openapi.OpenApiPlugin;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.Connector;
@@ -11,6 +13,8 @@ import tma.RestaurantApplication;
 import tma.bill.BillHandler;
 import tma.bill.menu.MenuHandler;
 import tma.conf.RestaurantProperties;
+
+import io.swagger.v3.oas.models.info.Info;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -40,7 +44,15 @@ public class HttpServer {
         return server;
       });
       conf.requestLogger((ctx, ms) -> RestaurantApplication.LOG.debug("{}: {} in {}", ctx.method(), ctx.url(), ms));
+      conf.registerPlugin(new OpenApiPlugin(getOpenApiOptions()));
     });
+  }
+
+  private OpenApiOptions getOpenApiOptions() {
+    Info applicationInfo = new Info()
+      .version("1.0")
+      .description("My Application");
+    return new OpenApiOptions(applicationInfo).path("/docs");
   }
 
   public void start() {
