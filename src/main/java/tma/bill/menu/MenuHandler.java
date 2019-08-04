@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import tma.RestaurantApplication;
 import tma.web.Pager;
 
+import java.util.Optional;
+
 @Component
 public class MenuHandler implements CrudHandler {
   @Autowired
@@ -55,10 +57,13 @@ public class MenuHandler implements CrudHandler {
 
   @Override
   public void getAll(@NotNull Context context) {
-    String pageStr = context.queryParam("page");
-    String sizeStr = context.queryParam("size");
-    if (pageStr!=null && sizeStr != null) {
-      Pageable pageable = PageRequest.of(Integer.parseInt(pageStr) -1, Integer.parseInt(sizeStr));
+    Optional<String> pageStr = Optional.ofNullable(context.queryParam("page"));
+    Optional<String> sizeStr = Optional.ofNullable(context.queryParam("size"));
+    if (pageStr.isPresent() && sizeStr.isPresent()) {
+      Pageable pageable = PageRequest.of(
+        Integer.parseInt(pageStr.get()) -1,
+        Integer.parseInt(sizeStr.get())
+      );
       Page<MenuItem> menus = service.findAll(pageable);
       context.json(Pager.fromMenu(menus)).status(200);
     } else {
@@ -68,15 +73,21 @@ public class MenuHandler implements CrudHandler {
   }
 
   public void search(@NotNull Context context) {
-//    String pageStr = context.queryParam("page");
-//    String sizeStr = context.queryParam("size");
-//    if (pageStr!=null && sizeStr != null) {
-//      Pageable pageable = PageRequest.of(Integer.parseInt(pageStr) -1, Integer.parseInt(sizeStr));
-//      Page<MenuItem> menus = service.search(context.queryParam("keyword"), pageable);
-//      context.json(Pager.fromMenu(menus)).status(200);
-//    } else {
-//      Iterable<MenuItem> menus = service.search(context.queryParam("keyword"));
-//      context.json(menus).status(200);
-//    }
+    Optional<String> pageStr = Optional.ofNullable(context.queryParam("page"));
+    Optional<String> sizeStr = Optional.ofNullable(context.queryParam("size"));
+    if (pageStr.isPresent() && sizeStr.isPresent()) {
+      Pageable pageable = PageRequest.of(
+        Integer.parseInt(pageStr.get()) -1,
+        Integer.parseInt(sizeStr.get())
+      );
+      Page<MenuItem> menus = service.search(
+        Optional.ofNullable(context.queryParam("keyword")).orElse(""),
+        pageable);
+      context.json(Pager.fromMenu(menus)).status(200);
+    } else {
+      Iterable<MenuItem> menus = service.search(
+        Optional.ofNullable(context.queryParam("keyword")).orElse(""));
+      context.json(menus).status(200);
+    }
   }
 }

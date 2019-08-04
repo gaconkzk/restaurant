@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface MenuRepository extends PagingAndSortingRepository<MenuItem, Integer> {
   Page<MenuItem> findAll(Pageable pageable);
-  Page<MenuItem> findByNameContainingOrTagsContaining(String keyword1, String keyword2, Pageable pageable);
+  Page<MenuItem> findByNameContainingOrTagsContainingOrDescriptionContaining(String keyword1, String keyword2, String keyword3, Pageable pageable);
 
-  List<MenuItem> findByName(String name);
+  MenuItem findByName(String name);
 
-  Iterable<MenuItem> findByNameContainingOrTagsContaining(String keyword1, String keyword2);
+  Iterable<MenuItem> findByNameContainingOrTagsContainingOrDescriptionContaining(String keyword1, String keyword2, String keyword3);
 }

@@ -28,8 +28,8 @@ public class MenuService {
       if (menu.getId() != null) {
         throw new BadRequestResponse("Menu id should not existed.");
       }
-      List<MenuItem> existed = menuRepository.findByName(menu.getName());
-      if (existed != null && existed.size()>0) {
+      MenuItem existed = menuRepository.findByName(menu.getName());
+      if (existed != null) {
         throw new BadRequestResponse("Menu " + menu.getName() + " already existed.");
       }
       return menuRepository.save(menu);
@@ -65,15 +65,19 @@ public class MenuService {
     return menuRepository.findAll(pageable);
   }
 
-  public Page<MenuItem> search(String keyword, Pageable pageable) {
-    return menuRepository.findByNameContainingOrTagsContaining(keyword, keyword, pageable);
+  Page<MenuItem> search(String keyword, Pageable pageable) {
+    return menuRepository.findByNameContainingOrTagsContainingOrDescriptionContaining(keyword, keyword, keyword, pageable);
   }
 
-  public Iterable<MenuItem> search(String keyword) {
-    return menuRepository.findByNameContainingOrTagsContaining(keyword, keyword);
+  Iterable<MenuItem> search(String keyword) {
+    return menuRepository.findByNameContainingOrTagsContainingOrDescriptionContaining(keyword, keyword, keyword);
   }
 
-  public Iterable<MenuItem> findAll() {
+  Iterable<MenuItem> findAll() {
     return menuRepository.findAll();
+  }
+
+  public MenuItem findByName(String name) {
+    return menuRepository.findByName(name);
   }
 }

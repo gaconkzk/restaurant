@@ -16,14 +16,14 @@ import java.util.stream.Stream;
 public class BillOrder {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Integer id;
 
   @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private Set<BillOrderMenu> buildOrderMenus = new HashSet<>();
-
-  public BillOrder(Integer orderNo) {
-    this.id = orderNo;
-  }
+//
+//  public BillOrder(Integer orderNo) {
+//    this.id = orderNo;
+//  }
 
   public BillOrder(Integer orderNo, BillOrderMenu ... boms) {
     this.id = orderNo;

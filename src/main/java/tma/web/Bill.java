@@ -17,7 +17,7 @@ public class Bill {
 
   @Data
   @AllArgsConstructor
-  static
+  public static
   class Order {
     String menu;
     Integer quantity;
