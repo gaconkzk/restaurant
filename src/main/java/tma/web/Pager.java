@@ -19,8 +19,11 @@ public class Pager<T> {
   boolean first;
   boolean last;
 
-  public static Pager fromMenu(org.springframework.data.domain.Page<MenuItem> page) {
-    Pager p = new Pager<MenuItem>();
+  public static class PagerMenu extends Pager<MenuItem> {}
+  public static class PagerBill extends Pager<Bill> {}
+
+  public static PagerMenu fromMenu(org.springframework.data.domain.Page<MenuItem> page) {
+    PagerMenu p = new PagerMenu();
     p.page = page.getNumber() + 1;
     p.totalPages = page.getTotalPages();
     p.totalItems = (int) page.getTotalElements();
@@ -31,8 +34,8 @@ public class Pager<T> {
     return p;
   }
 
-  public static Pager fromBill(org.springframework.data.domain.Page<BillOrder> page) {
-    Pager p = new Pager<Bill>();
+  public static PagerBill fromBill(org.springframework.data.domain.Page<BillOrder> page) {
+    PagerBill p = new PagerBill();
     p.page = page.getNumber() + 1;
     p.totalPages = page.getTotalPages();
     p.totalItems = (int) page.getTotalElements();

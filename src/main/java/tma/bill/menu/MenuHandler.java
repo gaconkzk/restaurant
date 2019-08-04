@@ -25,7 +25,7 @@ public class MenuHandler implements CrudHandler {
   }
 
   @OpenApi(
-    path = "/menus",
+    path = "/api/v1/menus",
     method = HttpMethod.POST,
     summary = "Create new menu",
     operationId = "createMenuV1",
@@ -64,6 +64,21 @@ public class MenuHandler implements CrudHandler {
     context.json(menu).status(200);
   }
 
+  @OpenApi(
+    path = "/api/v1/menus",
+    method = HttpMethod.GET,
+    queryParams = {
+      @OpenApiParam(name="page", description = "Page number, start with 1"),
+      @OpenApiParam(name="size", description = "Number of items per page")
+    },
+    summary = "Get all menus. when using with 'page' and 'size' parameters, return 'PagerMenu' properties. Or else, return" +
+      " full array of MenuItems ",
+    operationId = "getAllMenuV1",
+    responses = {
+      @OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuItem[].class)),
+      @OpenApiResponse(status = "200", content = @OpenApiContent(from = Pager.PagerMenu.class))
+    }
+  )
   @Override
   public void getAll(@NotNull Context context) {
     Optional<String> pageStr = Optional.ofNullable(context.queryParam("page"));
@@ -81,6 +96,22 @@ public class MenuHandler implements CrudHandler {
     }
   }
 
+
+  @OpenApi(
+    path = "/api/v1/search/menus",
+    method = HttpMethod.GET,
+    queryParams = {
+      @OpenApiParam(name="keyword", description = "All menus having name, description or tags contains this keyword will be returned."),
+      @OpenApiParam(name="page", description = "Page number, start with 1"),
+      @OpenApiParam(name="size", description = "Number of items per page")
+    },
+    summary = "Search all menu having name, description or tags containing 'keyword'.",
+    operationId = "searchMenuV1",
+    responses = {
+      @OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuItem[].class)),
+      @OpenApiResponse(status = "200", content = @OpenApiContent(from = Pager.PagerMenu.class))
+    }
+  )
   public void search(@NotNull Context context) {
     Optional<String> pageStr = Optional.ofNullable(context.queryParam("page"));
     Optional<String> sizeStr = Optional.ofNullable(context.queryParam("size"));
