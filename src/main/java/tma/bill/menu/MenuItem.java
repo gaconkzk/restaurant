@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 public class MenuItem {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
 
   private String name;
@@ -37,9 +37,17 @@ public class MenuItem {
     this.tags = String.join(",", tags);
   }
 
-  @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "menu", cascade = CascadeType.MERGE)
   @JsonIgnore
   private Set<BillOrderMenu> billOrderMenus;
+
+  public MenuItem(String name, String description, String image, Integer price, String tags) {
+    this.name = name;
+    this.description = description;
+    this.image = image;
+    this.price = price;
+    this.tags = tags;
+  }
 
   public MenuItem(Integer id, String name, String description, String image, Integer price, String tags) {
     this.id = id;

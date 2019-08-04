@@ -70,4 +70,7 @@ dependencies {
     compile "io.javalin:javalin:$javalin"
     runtime "org.jetbrains.kotlin:kotlin-stdlib:$kotlin"
     testCompile "junit:junit:$junit"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testRuntime "com.h2database:h2"
 }

@@ -23,7 +23,7 @@ public class MenuService {
     this.menuRepository = menuRepository;
   }
 
-  MenuItem create(@NotNull MenuItem menu) {
+  public MenuItem create(@NotNull MenuItem menu) {
     try {
       if (menu.getId() != null) {
         throw new BadRequestResponse("Menu id should not existed.");

@@ -18,12 +18,8 @@ public class BillOrder {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "bill", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
   private Set<BillOrderMenu> buildOrderMenus = new HashSet<>();
-//
-//  public BillOrder(Integer orderNo) {
-//    this.id = orderNo;
-//  }
 
   public BillOrder(Integer orderNo, BillOrderMenu ... boms) {
     this.id = orderNo;
