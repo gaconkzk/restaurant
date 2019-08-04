@@ -1,20 +1,19 @@
 package tma.components;
 
+import io.javalin.Javalin;
 import io.javalin.plugin.openapi.OpenApiOptions;
 import io.javalin.plugin.openapi.OpenApiPlugin;
+import io.javalin.plugin.openapi.ui.SwaggerOptions;
+import io.swagger.v3.oas.models.info.Info;
+import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.server.Connector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import io.javalin.Javalin;
 import tma.RestaurantApplication;
 import tma.bill.BillHandler;
 import tma.bill.menu.MenuHandler;
 import tma.conf.RestaurantProperties;
-
-import io.swagger.v3.oas.models.info.Info;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -52,7 +51,8 @@ public class HttpServer {
     Info applicationInfo = new Info()
       .version("1.0")
       .description("My Application");
-    return new OpenApiOptions(applicationInfo).path("/docs");
+    return new OpenApiOptions(applicationInfo).path("/docs")
+      .swagger(new SwaggerOptions("/swagger").title("Restaurant REST Api"));
   }
 
   public void start() {

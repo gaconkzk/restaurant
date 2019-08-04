@@ -3,10 +3,7 @@ package tma.bill.menu;
 import io.javalin.apibuilder.CrudHandler;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
-import io.javalin.plugin.openapi.annotations.OpenApi;
-import io.javalin.plugin.openapi.annotations.OpenApiContent;
-import io.javalin.plugin.openapi.annotations.OpenApiRequestBody;
-import io.javalin.plugin.openapi.annotations.OpenApiResponse;
+import io.javalin.plugin.openapi.annotations.*;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +25,10 @@ public class MenuHandler implements CrudHandler {
   }
 
   @OpenApi(
+    path = "/menus",
+    method = HttpMethod.POST,
+    summary = "Create new menu",
+    operationId = "createMenuV1",
     requestBody = @OpenApiRequestBody(content = @OpenApiContent(from = MenuItem.class)),
     responses = {@OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuItem.class))}
   )

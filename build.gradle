@@ -54,9 +54,6 @@ dependencies {
     // json plugin
     compile "com.fasterxml.jackson.core:jackson-databind:$jackson"
 
-    // hibernate
-//    compile "org.hibernate:hibernate-core:$hibernate"
-
     // spring-data
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -65,11 +62,9 @@ dependencies {
     compile "io.swagger.core.v3:swagger-core:$swagger"
     compile "io.swagger.core.v3:swagger-models:$swagger"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+"
-
-//    compile "org.liquibase:liquibase-core"
+    compile "org.webjars:swagger-ui:3.22.2"
 
     compile "com.zaxxer:HikariCP:$hikari"
-//    runtimeOnly "com.h2database:h2:$h2db"
     runtimeOnly "org.postgresql:postgresql"
 
     compile "io.javalin:javalin:$javalin"
