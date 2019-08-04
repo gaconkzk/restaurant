@@ -1,5 +1,6 @@
 package tma.bill;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import tma.bill.menu.MenuItem;
@@ -24,6 +25,7 @@ public class BillOrderMenu {
   @Id
   @ManyToOne
   @JoinColumn
+  @JsonIgnore
   BillOrder bill;
 
   private Integer quantity;

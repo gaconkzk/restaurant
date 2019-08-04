@@ -16,13 +16,13 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 
 @Component
 public class HttpServer {
-  RestaurantProperties config;
+  private RestaurantProperties config;
 
-  MenuHandler menuHandler;
+  private MenuHandler menuHandler;
 
-  BillHandler billHandler;
+  private BillHandler billHandler;
 
-  Javalin app;
+  private Javalin app;
 
   @Autowired
   public HttpServer(RestaurantProperties config, MenuHandler menuHandler, BillHandler billHandler) {

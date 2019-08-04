@@ -2,7 +2,6 @@ package tma.bill;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tma.RestaurantApplication;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -19,7 +18,7 @@ public class BillOrder {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
-  @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "bill", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private Set<BillOrderMenu> buildOrderMenus = new HashSet<>();
 
   public BillOrder(Integer orderNo) {

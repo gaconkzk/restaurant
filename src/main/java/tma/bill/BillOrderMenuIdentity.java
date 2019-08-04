@@ -3,7 +3,6 @@ package tma.bill;
 import lombok.*;
 import tma.bill.menu.MenuItem;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
