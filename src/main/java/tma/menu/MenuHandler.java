@@ -73,7 +73,7 @@ public class MenuHandler {
     MenuModel menu = this.service.find(id);
     context.json(menu).status(200);
   }
-  
+
   @OpenApi(
     path = "/api/v1/menus/:menu-id",
     pathParams = @OpenApiParam(name="menu-id"),

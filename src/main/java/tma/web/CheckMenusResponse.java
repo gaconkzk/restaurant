@@ -24,9 +24,6 @@ public class CheckMenusResponse {
 
   public CheckMenusResponse(Page<MenuModel> menuModels) {
     this.menus = menuModels.stream().map(mm -> {
-      // This is not a best practice, but it
-      // should be enough in this simple case
-      // for dealing with famous lazy initialization exception
       Integer totalQuantities = mm.getOrdersMenus().stream().filter(om -> om.getQuantity() > 0).mapToInt(OrderMenu::getQuantity).sum();
       Integer totalPrice = mm.getPrice() * totalQuantities;
       return new MenuCheckResponse(
