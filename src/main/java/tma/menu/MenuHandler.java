@@ -131,14 +131,14 @@ public class MenuHandler implements CrudHandler {
 
 
   @OpenApi(
-    path = "/api/v1/check",
+    path = "/api/v1/menus/check",
     method = HttpMethod.GET,
     summary = "Get list menus items and their corresponded ordered quantities, prices, and total price of all .",
     operationId = "getAllCheckMenusV1",
     responses = @OpenApiResponse(status = "200", content = @OpenApiContent(from = CheckMenusResponse.class))
   )
   @Transactional // We need to enable transactional here for calculating order prices/quantity
-  public void get(Context context) {
+  public void check(Context context) {
     // get all menus
     Page<MenuModel> menuModels = service.findAll(Pageable.unpaged());
     CheckMenusResponse response = new CheckMenusResponse(menuModels);

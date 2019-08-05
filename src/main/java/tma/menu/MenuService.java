@@ -56,7 +56,7 @@ public class MenuService {
   MenuModel find(@NotNull Integer id) {
     Optional<MenuModel> menu = this.menuRepository
         .findById(id);
-    return menu.orElseThrow(() -> new NotFoundResponse("Menu" + id + " not found"));
+    return menu.orElseThrow(() -> new NotFoundResponse("Menu " + id + " not found"));
   }
 
   void update(MenuModel menu) {

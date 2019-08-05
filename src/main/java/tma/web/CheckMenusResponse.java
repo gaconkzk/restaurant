@@ -34,7 +34,7 @@ public class CheckMenusResponse {
         totalQuantities,
         totalPrice
       );
-    }).filter(checkedMenu -> checkedMenu.quantity > 0).collect(Collectors.toSet());
+    }).collect(Collectors.toSet());
 
     this.total = this.menus.stream().mapToInt(m -> m.total).sum();
   }
