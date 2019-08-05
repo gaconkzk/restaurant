@@ -10,7 +10,6 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import tma.check.CheckHandler;
 import tma.RestaurantApplication;
 import tma.bill.BillHandler;
 import tma.menu.MenuHandler;
@@ -26,18 +25,15 @@ public class JavalinServer {
 
   private BillHandler billHandler;
 
-  private CheckHandler checkHandler;
-
   private Javalin app;
 
   @Autowired
   public JavalinServer(
-    RestaurantProperties config, MenuHandler menuHandler, BillHandler billHandler, CheckHandler checkHandler
+    RestaurantProperties config, MenuHandler menuHandler, BillHandler billHandler
   ) {
     this.config = config;
     this.menuHandler = menuHandler;
     this.billHandler = billHandler;
-    this.checkHandler = checkHandler;
 
     this.app = Javalin.create(conf -> {
       conf.server(() -> {
@@ -74,13 +70,13 @@ public class JavalinServer {
     app.routes(() -> path("/api/v1", () -> {
       get("search/menus", this.menuHandler::search);
       crud("menus/:menu-id", this.menuHandler);
+      // for listing all menus and their related information
+      get("/check", this.menuHandler::get);
 
       get("/bills", this.billHandler::getAll);
       post("/bills", this.billHandler::create);
       patch("/bills/:bill-id", this.billHandler::update);
       get("/bills/:bill-id", this.billHandler::getOne);
-
-      get("/check", this.checkHandler::get);
     }));
   }
 }

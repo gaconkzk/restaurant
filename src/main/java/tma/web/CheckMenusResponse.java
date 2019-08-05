@@ -17,7 +17,7 @@ public class CheckMenusResponse {
   @AllArgsConstructor
   @Data
   private static class MenuCheckResponse {
-    String menu;
+    String name;
     Integer quantity;
     Integer total;
   }

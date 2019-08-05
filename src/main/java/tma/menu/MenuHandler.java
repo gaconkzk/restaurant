@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import tma.RestaurantApplication;
+import tma.web.CheckMenusResponse;
 import tma.web.Pager;
 
 import java.util.Optional;
@@ -125,5 +127,21 @@ public class MenuHandler implements CrudHandler {
       Optional.ofNullable(context.queryParam("keyword")).orElse(""),
       pageable);
     context.json(Pager.fromMenu(menus)).status(200);
+  }
+
+
+  @OpenApi(
+    path = "/api/v1/checks",
+    method = HttpMethod.GET,
+    summary = "Get list menus items and their corresponded ordered quantities, prices, and total price of all .",
+    operationId = "getAllCheckMenusV1",
+    responses = @OpenApiResponse(status = "200", content = @OpenApiContent(from = CheckMenusResponse.class))
+  )
+  @Transactional // We need to enable transactional here for calculating order prices/quantity
+  public void get(Context context) {
+    // get all menus
+    Page<MenuModel> menuModels = service.findAll(Pageable.unpaged());
+    CheckMenusResponse response = new CheckMenusResponse(menuModels);
+    context.json(response).status(200);
   }
 }

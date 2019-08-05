@@ -7,34 +7,27 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tma.RestaurantApplication;
-import tma.menu.MenuRepository;
 
 import java.util.Optional;
 
 @Service
 public class BillService {
   private final BillRepository repository;
-  private final MenuRepository menuRepository;
 
   @Autowired
-  public BillService(BillRepository repository, MenuRepository menuRepository) {
+  public BillService(BillRepository repository) {
     this.repository = repository;
-    this.menuRepository = menuRepository;
   }
 
-  Iterable<OrderModel> findAll() {
-    return this.repository.findAll();
-  }
-
-  Page<OrderModel> findAll(Pageable pageable) {
+  public Page<OrderModel> findAll(Pageable pageable) {
     return this.repository.findAll(pageable);
   }
 
-  Optional<OrderModel> find(Integer id) {
+  public Optional<OrderModel> find(Integer id) {
     return repository.findById(id);
   }
 
-  OrderModel update(OrderModel bill) {
+  public OrderModel update(OrderModel bill) {
     try {
       if (bill.getId() == null) {
         throw new BadRequestResponse("Bill order number not existed");
@@ -47,7 +40,7 @@ public class BillService {
     }
   }
 
-  OrderModel create(OrderModel bill) {
+  public OrderModel create(OrderModel bill) {
     try {
       if (bill.getId() != null) {
         Optional<OrderModel> existed = repository.findById(bill.getId());
