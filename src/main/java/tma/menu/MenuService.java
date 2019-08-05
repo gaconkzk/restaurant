@@ -37,11 +37,11 @@ public class MenuService {
       return menuRepository.save(menu);
     } catch (Exception ex) {
       RestaurantApplication.LOG.error(ex.getMessage(), ex);
-      throw new InternalServerErrorResponse(ex.getMessage());
+      throw new BadRequestResponse(ex.getMessage());
     }
   }
 
-  void delete(@NotNull Integer id) {
+  public void delete(@NotNull Integer id) {
     try {
       this.menuRepository.deleteById(id);
     } catch (EmptyResultDataAccessException ex) {
@@ -53,13 +53,13 @@ public class MenuService {
     }
   }
 
-  MenuModel find(@NotNull Integer id) {
+  public MenuModel find(@NotNull Integer id) {
     Optional<MenuModel> menu = this.menuRepository
         .findById(id);
-    return menu.orElseThrow(() -> new NotFoundResponse("Menu " + id + " not found"));
+    return menu.orElseThrow(() -> new NotFoundResponse("Menu " + id + " not found."));
   }
 
-  void update(MenuModel menu) {
+  public void update(MenuModel menu) {
     menuRepository.save(menu);
   }
 
@@ -68,22 +68,9 @@ public class MenuService {
     return menuRepository.findAll(pageable);
   }
 
-  Page<MenuModel> search(String keyword, Pageable pageable) {
+  public Page<MenuModel> search(String keyword, Pageable pageable) {
     return menuRepository.findByNameContainingOrTagsContainingOrDescriptionContaining(keyword, keyword, keyword, pageable);
   }
-
-  Iterable<MenuModel> search(String keyword) {
-    return menuRepository.findByNameContainingOrTagsContainingOrDescriptionContaining(keyword, keyword, keyword);
-  }
-
-  Iterable<MenuModel> findAll() {
-    return menuRepository.findAll();
-  }
-
-  public MenuModel findByName(String name) {
-    return menuRepository.findByName(name);
-  }
-
 
   @Transactional
   public Set<MenuModel> getMenusByName(Set<String> names) {
