@@ -33,6 +33,8 @@ spring:
     username: restaurant_auth
     password: re5t@urant_Auth
   jpa:
+    # Curently the `org.postgresql.jdbc.PgConnection` in not implement `createClob()`
+    # So for postgresSql we need to enable this.
     properties.hibernate.jdbc.lob.non_contextual_creation: true
     hibernate:
       # we won't do this in a production service - we need to use sql 
