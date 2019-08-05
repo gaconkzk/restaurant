@@ -19,6 +19,36 @@ menu and bill order management.
 ## Database models:
 ![Database models](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/gaconkzk/restaurant/cotry/db_schema.puml)
 
+## Restaurant properties sample:
+```yaml
+spring:
+  # connection pool configuration
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 4
+    # the default jdbc url/database/username/password - should be change
+    # when running in production
+    url: jdbc:postgresql://localhost:5433/restaurant
+    username: restaurant_auth
+    password: re5t@urant_Auth
+  jpa:
+    properties.hibernate.jdbc.lob.non_contextual_creation: true
+    hibernate:
+      # we won't do this in a production service - we need to use sql 
+      # files to create/alter tables by ourselves or use 3rd like 
+      # `flyway` or `liquibase`.
+      # With this config, the database will be reset each time we 
+      # restart the service.
+      ddl-auto: create
+
+# Our custom properties
+restaurant:
+  version: 1.0.0
+  host: 127.0.0.1
+  port: 8088
+```
+
 ## Service features:
 
 All supported REST operation are documents in simple format and served by swagger ui
