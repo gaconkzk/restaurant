@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "item_order")
 @NoArgsConstructor
 @Data
 public class OrderModel {

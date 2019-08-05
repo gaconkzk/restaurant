@@ -56,9 +56,9 @@ public class JavalinServer {
   private OpenApiOptions getOpenApiOptions() {
     Info applicationInfo = new Info()
       .version("1.0")
-      .description("My Application");
-    return new OpenApiOptions(applicationInfo).path("/docs")
-      .swagger(new SwaggerOptions("/swagger").title("Restaurant REST Api"));
+      .description("Restaurant REST Api");
+    return new OpenApiOptions(applicationInfo).path("/docs/json")
+      .swagger(new SwaggerOptions("/docs").title("Restaurant REST Api"));
   }
 
   public void start() {

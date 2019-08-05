@@ -10,33 +10,20 @@ sprite $primary [17x12/16z] bOqv3e1030CJRzPn9Fx_NWY7n4eqJ3TJs6OVa5pTpD-5tl3YyFHG
 hide methods
 hide stereotypes
 
-table(Menu) {
+table(MenuModel) {
   +pk(id)
   +name: String
   +description: String?
   +image: String?
   +price: Number
+  +tags: String[]
 }
 
-table(Tag) {
-  +pk(id)
-  +name
-}
-
-table(TagMenu) {
-  +pk(id)
-  +fk(menu_id)
-  +fk(tag_id)
-}
-
-TagMenu::menu_id --> "n" Menu::id
-TagMenu::tag_id --> "n" Tag::id
-
-table(Bill) {
+table(OrderModel) {
   +pk(id)
 }
 
-table(BillMenu) {
+table(OrderMenu) {
   +pk(id)
   +fk(menu_id)
   +fk(bill_id)
@@ -44,6 +31,6 @@ table(BillMenu) {
   +ordered_time: DateTime
 }
 
-BillMenu::menu_id --> "n" Menu::id
-BillMenu::bill_id --> Bill::id
+OrderMenu::menu_id --> "n" MenuModel::id
+OrderMenu::bill_id --> "n" OrderModel::id
 @enduml
