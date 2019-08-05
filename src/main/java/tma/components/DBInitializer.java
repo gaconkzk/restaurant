@@ -21,7 +21,7 @@ public class DBInitializer {
   private BillRepository billRepo;
 
   @Autowired
-  public void DBInitializer(MenuRepository menuRepository, BillRepository billRepository) {
+  public DBInitializer(MenuRepository menuRepository, BillRepository billRepository) {
       this.menuRepo = menuRepository;
       this.billRepo = billRepository;
   }

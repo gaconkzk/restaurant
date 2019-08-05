@@ -1,8 +1,6 @@
 package tma.conf;
 
 import lombok.Data;
-import tma.conf.DatabaseConfiguration;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("restaurant")

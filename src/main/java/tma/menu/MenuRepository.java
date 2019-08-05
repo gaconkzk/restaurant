@@ -15,6 +15,4 @@ public interface MenuRepository extends PagingAndSortingRepository<MenuModel, In
 
   @Query(value = "SELECT menu from MenuModel menu where name in ?1")
   Set<MenuModel> getAllMenuByName(Set<String> names);
-
-  Iterable<MenuModel> findByNameContainingOrTagsContainingOrDescriptionContaining(String keyword1, String keyword2, String keyword3);
 }

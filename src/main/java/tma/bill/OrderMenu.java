@@ -31,16 +31,11 @@ public class OrderMenu {
   private Integer quantity;
   private Date orderedDate;
 
-  public OrderMenu(OrderModel order) {
-    this.order = order;
-  }
-
   public OrderMenu(MenuModel menu, Integer quantity, Date orderedDate) {
     this.menu = menu;
     this.quantity = quantity;
     this.orderedDate = orderedDate;
   }
-
 
   @Override
   public boolean equals(Object o) {

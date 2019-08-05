@@ -17,17 +17,17 @@ public class RestaurantApplication implements CommandLineRunner {
   public static final Logger LOG = LoggerFactory.getLogger(RestaurantApplication.class);
 
   @Autowired
-  JavalinServer server;
+  private JavalinServer server;
 
   @Autowired
-  DBInitializer db;
+  private DBInitializer db;
 
   public static void main(String[] args) {
     SpringApplication.run(RestaurantApplication.class, args);
   }
 
   @Override
-  public void run(String... args) throws Exception {
+  public void run(String... args) {
     server.start();
     server.routes();
 
