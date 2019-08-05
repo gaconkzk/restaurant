@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tma.RestaurantApplication;
-import tma.bill.menu.MenuRepository;
+import tma.menu.MenuRepository;
 
 import java.util.Optional;
 
@@ -22,24 +22,24 @@ public class BillService {
     this.menuRepository = menuRepository;
   }
 
-  Iterable<BillOrder> findAll() {
+  Iterable<OrderModel> findAll() {
     return this.repository.findAll();
   }
 
-  Page<BillOrder> findAll(Pageable pageable) {
+  Page<OrderModel> findAll(Pageable pageable) {
     return this.repository.findAll(pageable);
   }
 
-  Optional<BillOrder> find(Integer id) {
+  Optional<OrderModel> find(Integer id) {
     return repository.findById(id);
   }
 
-  BillOrder create(BillOrder bill) {
+  OrderModel create(OrderModel bill) {
     try {
       if (bill.getId() == null) {
         bill.setId(repository.maxOrderNo() + 1);
       } else {
-        Optional<BillOrder> existed = repository.findById(bill.getId());
+        Optional<OrderModel> existed = repository.findById(bill.getId());
         if (existed.isPresent()) {
           throw new BadRequestResponse("Menu " + bill.getId() + " already existed.");
         }

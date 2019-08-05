@@ -3,39 +3,39 @@ package tma.bill;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tma.bill.menu.MenuItem;
+import tma.menu.MenuModel;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@IdClass(BillOrderMenuIdentity.class)
-@Table(name = "bill_menu")
+@IdClass(OrderMenuIdentity.class)
+@Table(name = "order_menu")
 @NoArgsConstructor
 @Data
-public class BillOrderMenu {
+public class OrderMenu {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   Integer id;
   @Id
   @ManyToOne
   @JoinColumn
-  MenuItem menu;
+  MenuModel menu;
   @Id
   @ManyToOne
   @JoinColumn
   @JsonIgnore
-  BillOrder bill;
+  OrderModel order;
 
   private Integer quantity;
   private Date orderedDate;
 
-  public BillOrderMenu(BillOrder bill) {
-    this.bill = bill;
+  public OrderMenu(OrderModel order) {
+    this.order = order;
   }
 
-  public BillOrderMenu(MenuItem menu, Integer quantity, Date orderedDate) {
+  public OrderMenu(MenuModel menu, Integer quantity, Date orderedDate) {
     this.menu = menu;
     this.quantity = quantity;
     this.orderedDate = orderedDate;
@@ -45,17 +45,17 @@ public class BillOrderMenu {
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
-    if (!(o instanceof BillOrderMenu)) return false;
-    BillOrderMenu that = (BillOrderMenu) o;
+    if (!(o instanceof OrderMenu)) return false;
+    OrderMenu that = (OrderMenu) o;
     return id.equals(that.id) &&
       Objects.equals(menu.getName(), that.menu.getName()) &&
-      Objects.equals(bill.getId(), that.bill.getId()) &&
+      Objects.equals(order.getId(), that.order.getId()) &&
       Objects.equals(quantity, that.quantity) &&
       Objects.equals(orderedDate, that.orderedDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, menu.getName(), bill.getId(), quantity, orderedDate);
+    return Objects.hash(id, menu.getName(), order.getId(), quantity, orderedDate);
   }
 }

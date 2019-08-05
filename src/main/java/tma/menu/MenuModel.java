@@ -1,8 +1,8 @@
-package tma.bill.menu;
+package tma.menu;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import tma.bill.BillOrderMenu;
+import tma.bill.OrderMenu;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "menu")
 @Data
-public class MenuItem {
+public class MenuModel {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
@@ -32,16 +32,15 @@ public class MenuItem {
   public List<String> getTags() {
     return Arrays.asList(tags.split(","));
   }
-
   public void setTags(List<String> tags) {
     this.tags = String.join(",", tags);
   }
 
   @OneToMany(mappedBy = "menu", cascade = CascadeType.MERGE)
   @JsonIgnore
-  private Set<BillOrderMenu> billOrderMenus;
+  private Set<OrderMenu> ordersMenus;
 
-  public MenuItem(String name, String description, String image, Integer price, String tags) {
+  public MenuModel(String name, String description, String image, Integer price, String tags) {
     this.name = name;
     this.description = description;
     this.image = image;
@@ -49,7 +48,7 @@ public class MenuItem {
     this.tags = tags;
   }
 
-  public MenuItem(Integer id, String name, String description, String image, Integer price, String tags) {
+  public MenuModel(Integer id, String name, String description, String image, Integer price, String tags) {
     this.id = id;
     this.name = name;
     this.description = description;

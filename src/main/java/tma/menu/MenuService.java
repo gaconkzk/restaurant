@@ -1,4 +1,4 @@
-package tma.bill.menu;
+package tma.menu;
 
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.InternalServerErrorResponse;
@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tma.RestaurantApplication;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,12 +22,12 @@ public class MenuService {
     this.menuRepository = menuRepository;
   }
 
-  public MenuItem create(@NotNull MenuItem menu) {
+  public MenuModel create(@NotNull MenuModel menu) {
     try {
       if (menu.getId() != null) {
         throw new BadRequestResponse("Menu id should not existed.");
       }
-      MenuItem existed = menuRepository.findByName(menu.getName());
+      MenuModel existed = menuRepository.findByName(menu.getName());
       if (existed != null) {
         throw new BadRequestResponse("Menu " + menu.getName() + " already existed.");
       }
@@ -51,33 +50,33 @@ public class MenuService {
     }
   }
 
-  MenuItem find(@NotNull Integer id) {
-    Optional<MenuItem> menu = this.menuRepository
+  MenuModel find(@NotNull Integer id) {
+    Optional<MenuModel> menu = this.menuRepository
         .findById(id);
     return menu.orElseThrow(() -> new NotFoundResponse("Menu" + id + " not found"));
   }
 
-  void update(MenuItem menu) {
+  void update(MenuModel menu) {
     menuRepository.save(menu);
   }
 
-  Page<MenuItem> findAll(Pageable pageable) {
+  Page<MenuModel> findAll(Pageable pageable) {
     return menuRepository.findAll(pageable);
   }
 
-  Page<MenuItem> search(String keyword, Pageable pageable) {
+  Page<MenuModel> search(String keyword, Pageable pageable) {
     return menuRepository.findByNameContainingOrTagsContainingOrDescriptionContaining(keyword, keyword, keyword, pageable);
   }
 
-  Iterable<MenuItem> search(String keyword) {
+  Iterable<MenuModel> search(String keyword) {
     return menuRepository.findByNameContainingOrTagsContainingOrDescriptionContaining(keyword, keyword, keyword);
   }
 
-  Iterable<MenuItem> findAll() {
+  Iterable<MenuModel> findAll() {
     return menuRepository.findAll();
   }
 
-  public MenuItem findByName(String name) {
+  public MenuModel findByName(String name) {
     return menuRepository.findByName(name);
   }
 }

@@ -1,4 +1,4 @@
-package tma.bill.menu;
+package tma.menu;
 
 import io.javalin.apibuilder.CrudHandler;
 import io.javalin.http.BadRequestResponse;
@@ -29,13 +29,13 @@ public class MenuHandler implements CrudHandler {
     method = HttpMethod.POST,
     summary = "Create new menu",
     operationId = "createMenuV1",
-    requestBody = @OpenApiRequestBody(content = @OpenApiContent(from = MenuItem.class)),
-    responses = {@OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuItem.class))}
+    requestBody = @OpenApiRequestBody(content = @OpenApiContent(from = MenuModel.class)),
+    responses = {@OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuModel.class))}
   )
   @Override
   public void create(@NotNull Context context) {
     try {
-      MenuItem menu = context.bodyAsClass(MenuItem.class);
+      MenuModel menu = context.bodyAsClass(MenuModel.class);
       menu = service.create(menu);
       context.json(menu).status(200);
     } catch (BadRequestResponse ex) {
@@ -53,13 +53,13 @@ public class MenuHandler implements CrudHandler {
   @Override
   public void getOne(@NotNull Context context, @NotNull String s) {
     Integer id = Integer.valueOf(context.pathParam("menu-id"));
-    MenuItem menu = this.service.find(id);
+    MenuModel menu = this.service.find(id);
     context.json(menu).status(200);
   }
 
   @Override
   public void update(@NotNull Context context, @NotNull String s) {
-    MenuItem menu = context.bodyAsClass(MenuItem.class);
+    MenuModel menu = context.bodyAsClass(MenuModel.class);
     this.service.update(menu);
     context.json(menu).status(200);
   }
@@ -75,7 +75,7 @@ public class MenuHandler implements CrudHandler {
       " full array of MenuItems ",
     operationId = "getAllMenuV1",
     responses = {
-      @OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuItem[].class)),
+      @OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuModel[].class)),
       @OpenApiResponse(status = "200", content = @OpenApiContent(from = Pager.PagerMenu.class))
     }
   )
@@ -88,10 +88,10 @@ public class MenuHandler implements CrudHandler {
         Integer.parseInt(pageStr.get()) -1,
         Integer.parseInt(sizeStr.get())
       );
-      Page<MenuItem> menus = service.findAll(pageable);
+      Page<MenuModel> menus = service.findAll(pageable);
       context.json(Pager.fromMenu(menus)).status(200);
     } else {
-      Iterable<MenuItem> menus = service.findAll();
+      Iterable<MenuModel> menus = service.findAll();
       context.json(menus).status(200);
     }
   }
@@ -108,7 +108,7 @@ public class MenuHandler implements CrudHandler {
     summary = "Search all menu having name, description or tags containing 'keyword'.",
     operationId = "searchMenuV1",
     responses = {
-      @OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuItem[].class)),
+      @OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuModel[].class)),
       @OpenApiResponse(status = "200", content = @OpenApiContent(from = Pager.PagerMenu.class))
     }
   )
@@ -120,12 +120,12 @@ public class MenuHandler implements CrudHandler {
         Integer.parseInt(pageStr.get()) -1,
         Integer.parseInt(sizeStr.get())
       );
-      Page<MenuItem> menus = service.search(
+      Page<MenuModel> menus = service.search(
         Optional.ofNullable(context.queryParam("keyword")).orElse(""),
         pageable);
       context.json(Pager.fromMenu(menus)).status(200);
     } else {
-      Iterable<MenuItem> menus = service.search(
+      Iterable<MenuModel> menus = service.search(
         Optional.ofNullable(context.queryParam("keyword")).orElse(""));
       context.json(menus).status(200);
     }

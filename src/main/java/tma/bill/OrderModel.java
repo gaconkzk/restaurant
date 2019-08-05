@@ -13,19 +13,19 @@ import java.util.stream.Stream;
 @Table(name = "posts")
 @NoArgsConstructor
 @Data
-public class BillOrder {
+public class OrderModel {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @OneToMany(mappedBy = "bill", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-  private Set<BillOrderMenu> buildOrderMenus = new HashSet<>();
+  @OneToMany(mappedBy = "order", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+  private Set<OrderMenu> ordersMenus = new HashSet<>();
 
-  public BillOrder(Integer orderNo, BillOrderMenu ... boms) {
+  public OrderModel(Integer orderNo, OrderMenu... boms) {
     this.id = orderNo;
-    for (BillOrderMenu bom : boms) {
-      bom.setBill(this);
+    for (OrderMenu bom : boms) {
+      bom.setOrder(this);
     }
-    this.buildOrderMenus = Stream.of(boms).collect(Collectors.toSet());
+    this.ordersMenus = Stream.of(boms).collect(Collectors.toSet());
   }
 }

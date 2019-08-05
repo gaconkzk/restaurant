@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import tma.RestaurantApplication;
-import tma.bill.BillOrder;
-import tma.bill.BillOrderMenu;
+import tma.bill.OrderModel;
+import tma.bill.OrderMenu;
 import tma.bill.BillRepository;
-import tma.bill.menu.MenuItem;
-import tma.bill.menu.MenuRepository;
+import tma.menu.MenuModel;
+import tma.menu.MenuRepository;
 
 @Component
 public class DBInitializer {
@@ -27,7 +27,7 @@ public class DBInitializer {
   }
 
   public void init() {
-    MenuItem menu1 = new MenuItem(
+    MenuModel menu1 = new MenuModel(
         1,
         "Hawaiian Pizza",
         "All-time favourite toppings, Hawaiian pizza in Tropical Hawaii style.",
@@ -35,7 +35,7 @@ public class DBInitializer {
         300,
         "Italian,Ham,Pineapple"
     );
-    MenuItem menu2 = new MenuItem(
+    MenuModel menu2 = new MenuModel(
         2,
         "Chicken Tom Yum Pizza",
         "Best marinated chicken with pineapple and mushroom on Spicy Lemon sauce. Enjoy our tasty Thai style pizza.",
@@ -43,7 +43,7 @@ public class DBInitializer {
         350,
         "Italian,Thai,Chicken,Mushroom,Hot"
     );
-    MenuItem menu3 = new MenuItem(
+    MenuModel menu3 = new MenuModel(
         3,
         "Xiaolongbao",
         "Chinese steamed bun",
@@ -51,7 +51,7 @@ public class DBInitializer {
         200,
         "Chinese,Pork,Recommended"
     );
-    MenuItem menu4 = new MenuItem(
+    MenuModel menu4 = new MenuModel(
         4,
         "Kimchi",
         "Traditional side dish made from salted and fermented vegetables",
@@ -59,7 +59,7 @@ public class DBInitializer {
         50,
         "Korean,Radish,Cabbage"
     );
-    MenuItem menu5 = new MenuItem(
+    MenuModel menu5 = new MenuModel(
         5,
         "Oolong tea",
         "Partially fermented tea grown in the Alishan area",
@@ -68,7 +68,7 @@ public class DBInitializer {
         "Hot,Non-alcohol"
     );
 
-    MenuItem menu6 = new MenuItem(
+    MenuModel menu6 = new MenuModel(
         6,
         "Beer",
         "Fantastic flavors and authentic regional appeal beer",
@@ -81,19 +81,19 @@ public class DBInitializer {
 
     SimpleDateFormat sdf = new SimpleDateFormat("M/D/Y hh:mm:ss a");
     try {
-      BillOrderMenu orderMenu11 = new BillOrderMenu(menu1, 1, sdf.parse("1/1/2017 10:00:00 AM"));
-      BillOrderMenu orderMenu12 = new BillOrderMenu(menu4, 2, sdf.parse("1/1/2017 10:00:00 AM"));
-      BillOrderMenu orderMenu13 = new BillOrderMenu(menu4, 1, sdf.parse("1/1/2017 11:00:00 AM"));
+      OrderMenu orderMenu11 = new OrderMenu(menu1, 1, sdf.parse("1/1/2017 10:00:00 AM"));
+      OrderMenu orderMenu12 = new OrderMenu(menu4, 2, sdf.parse("1/1/2017 10:00:00 AM"));
+      OrderMenu orderMenu13 = new OrderMenu(menu4, 1, sdf.parse("1/1/2017 11:00:00 AM"));
 
-      BillOrderMenu orderMenu21 = new BillOrderMenu(menu3, 1, sdf.parse("1/1/2017 12:00:00 PM"));
-      BillOrderMenu orderMenu22 = new BillOrderMenu(menu6, 1, sdf.parse("1/1/2017 12:00:00 PM"));
+      OrderMenu orderMenu21 = new OrderMenu(menu3, 1, sdf.parse("1/1/2017 12:00:00 PM"));
+      OrderMenu orderMenu22 = new OrderMenu(menu6, 1, sdf.parse("1/1/2017 12:00:00 PM"));
 
-      BillOrderMenu orderMenu31 = new BillOrderMenu(menu5, 1, sdf.parse("1/1/2017 03:00:00 PM"));
-      BillOrderMenu orderMenu32 = new BillOrderMenu(menu6, 3, sdf.parse("1/1/2017 03:00:00 PM"));
+      OrderMenu orderMenu31 = new OrderMenu(menu5, 1, sdf.parse("1/1/2017 03:00:00 PM"));
+      OrderMenu orderMenu32 = new OrderMenu(menu6, 3, sdf.parse("1/1/2017 03:00:00 PM"));
 
-      BillOrder order1 = new BillOrder(1, orderMenu11, orderMenu12, orderMenu13);
-      BillOrder order2 = new BillOrder(2, orderMenu21, orderMenu22);
-      BillOrder order3 = new BillOrder(3, orderMenu31, orderMenu32);
+      OrderModel order1 = new OrderModel(1, orderMenu11, orderMenu12, orderMenu13);
+      OrderModel order2 = new OrderModel(2, orderMenu21, orderMenu22);
+      OrderModel order3 = new OrderModel(3, orderMenu31, orderMenu32);
 
       billRepo.saveAll(Arrays.asList(order1, order2, order3));
     } catch (ParseException ex) {

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import tma.RestaurantApplication;
 import tma.bill.BillHandler;
-import tma.bill.menu.MenuHandler;
+import tma.menu.MenuHandler;
 import tma.conf.RestaurantProperties;
 
 import static io.javalin.apibuilder.ApiBuilder.*;

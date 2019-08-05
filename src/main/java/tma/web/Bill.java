@@ -3,7 +3,7 @@ package tma.web;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import tma.bill.BillOrder;
+import tma.bill.OrderModel;
 
 import java.util.Date;
 import java.util.Set;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @Data
 public class Bill {
-  Integer id;
+  Integer orderNo;
   Integer totalPrice;
   Set<Order> orders;
 
@@ -26,11 +26,11 @@ public class Bill {
     Integer total;
   }
 
-  public static Bill fromModel(BillOrder billModel) {
+  public static Bill fromModel(OrderModel order) {
     Bill b = new Bill();
-    b.id = billModel.getId();
+    b.orderNo = order.getId();
 
-    b.orders = billModel.getBuildOrderMenus().stream()
+    b.orders = order.getOrdersMenus().stream()
         .map(buildOrderMenu -> {
           String menu = buildOrderMenu.getMenu().getName();
           Integer price = buildOrderMenu.getMenu().getPrice();

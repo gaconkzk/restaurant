@@ -5,7 +5,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BillRepository extends PagingAndSortingRepository<BillOrder, Integer> {
+public interface BillRepository extends PagingAndSortingRepository<OrderModel, Integer> {
 //  List<Bill> findByOrderNo(Integer orderNo);
 
   @Query(value = "select max(b.id) from bill b", nativeQuery = true)

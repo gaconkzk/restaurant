@@ -9,8 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import tma.RestaurantApplication;
-import tma.bill.menu.MenuItem;
-import tma.bill.menu.MenuService;
+import tma.menu.MenuModel;
+import tma.menu.MenuService;
 import tma.web.Bill;
 import tma.web.Pager;
 
@@ -34,10 +34,10 @@ public class BillHandler {
     String sizeStr = context.queryParam("size");
     if (pageStr!=null && sizeStr != null) {
       Pageable pageable = PageRequest.of(Integer.parseInt(pageStr) -1, Integer.parseInt(sizeStr));
-      Page<BillOrder> bills = service.findAll(pageable);
+      Page<OrderModel> bills = service.findAll(pageable);
       context.json(Pager.fromBill(bills)).status(200);
     } else {
-      Iterable<BillOrder> bills = service.findAll();
+      Iterable<OrderModel> bills = service.findAll();
 
       context.json(
           StreamSupport.stream(bills.spliterator(), false)
@@ -47,8 +47,8 @@ public class BillHandler {
     }
   }
 
-  interface Order2BillMenu extends Function<Bill.Order, BillOrderMenu> {
-    BillOrderMenu apply(Bill.Order order) throws NotFoundResponse;
+  interface Order2BillMenu extends Function<Bill.Order, OrderMenu> {
+    OrderMenu apply(Bill.Order order) throws NotFoundResponse;
   }
 
   public void create(Context context) {
@@ -56,14 +56,14 @@ public class BillHandler {
       Bill bill = context.bodyAsClass(Bill.class);
 
       Order2BillMenu order2BillMenu = (order) -> {
-        MenuItem menu = Optional.ofNullable(menuService.findByName(order.getMenu()))
+        MenuModel menu = Optional.ofNullable(menuService.findByName(order.getMenu()))
           .orElseThrow(() -> new NotFoundResponse("Menu " + order.getMenu() + " not existed."));
-        return new BillOrderMenu(menu, order.getQuantity(), order.getOrderedDate());
+        return new OrderMenu(menu, order.getQuantity(), order.getOrderedDate());
       };
 
-      BillOrderMenu[] billOrderMenus = bill.getOrders().stream().map(order2BillMenu).toArray(BillOrderMenu[]::new);
+      OrderMenu[] orderMenus = bill.getOrders().stream().map(order2BillMenu).toArray(OrderMenu[]::new);
 
-      BillOrder billorder = new BillOrder(bill.getId(), billOrderMenus);
+      OrderModel billorder = new OrderModel(bill.getOrderNo(), orderMenus);
       billorder = service.create(billorder);
       context.json(Bill.fromModel(billorder)).status(200);
     } catch (BadRequestResponse ex) {
@@ -77,7 +77,7 @@ public class BillHandler {
 
   public void getOne(Context context) {
     Integer id = Integer.valueOf(context.pathParam("bill-id"));
-    BillOrder bill = this.service.find(id).orElseThrow(() -> new NotFoundResponse("Bill number " + id + " not existed."));
+    OrderModel bill = this.service.find(id).orElseThrow(() -> new NotFoundResponse("Bill number " + id + " not existed."));
     context.json(Bill.fromModel(bill)).status(200);
   }
 }
