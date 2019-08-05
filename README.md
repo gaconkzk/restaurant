@@ -16,6 +16,9 @@ menu and bill order management.
   [Spring User Guide](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html)
   for more details.
 
+## Database models:
+![Database models](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/gaconkzk/restaurant/cotry/db_schema.puml)
+
 ## Service features:
 
 All supported REST operation are documents in simple format and served by swagger ui
