@@ -69,7 +69,12 @@ public class JavalinServer {
     app.routes(() -> path("/api/v1", () -> {
       get("search/menus", this.menuHandler::search);
       get("/menus/check", this.menuHandler::check);
-      crud("menus/:menu-id", this.menuHandler);
+
+      get("/menus", this.menuHandler::getAll);
+      post("/menus", this.menuHandler::create);
+      patch("/menus/:menu-id", this.menuHandler::update);
+      get("/menus/:menu-id", this.menuHandler::getOne);
+      delete("/menus/:menu-id", this.menuHandler::delete);
 
       get("/bills", this.billHandler::getAll);
       post("/bills", this.billHandler::create);

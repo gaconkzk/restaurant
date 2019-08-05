@@ -19,7 +19,7 @@ import java.util.Optional;
 import static tma.Utils.makePageable;
 
 @Component
-public class MenuHandler implements CrudHandler {
+public class MenuHandler {
   @Autowired
   private MenuService service;
 
@@ -35,7 +35,6 @@ public class MenuHandler implements CrudHandler {
     requestBody = @OpenApiRequestBody(content = @OpenApiContent(from = MenuModel.class)),
     responses = {@OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuModel.class))}
   )
-  @Override
   public void create(@NotNull Context context) {
     try {
       MenuModel menu = context.bodyAsClass(MenuModel.class);
@@ -49,13 +48,13 @@ public class MenuHandler implements CrudHandler {
 
   @OpenApi(
     path = "/api/v1/menus/:menu-id",
+    pathParams = @OpenApiParam(name="menu-id"),
     method = HttpMethod.DELETE,
     summary = "Delete menu",
     operationId = "deleteMenuV1",
     responses = {@OpenApiResponse(status = "200"),@OpenApiResponse(status = "404", description = "Menu not found")}
   )
-  @Override
-  public void delete(@NotNull Context context, @NotNull String s) {
+  public void delete(@NotNull Context context) {
     Integer id = Integer.valueOf(context.pathParam("menu-id"));
     this.service.delete(id);
     context.status(200);
@@ -63,13 +62,13 @@ public class MenuHandler implements CrudHandler {
 
   @OpenApi(
     path = "/api/v1/menus/:menu-id",
+    pathParams = @OpenApiParam(name="menu-id"),
     method = HttpMethod.GET,
     summary = "Get menu by id",
     operationId = "getOneMenuV1",
     responses = @OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuModel.class))
   )
-  @Override
-  public void getOne(@NotNull Context context, @NotNull String s) {
+  public void getOne(@NotNull Context context) {
     Integer id = Integer.valueOf(context.pathParam("menu-id"));
     MenuModel menu = this.service.find(id);
     context.json(menu).status(200);
@@ -78,14 +77,14 @@ public class MenuHandler implements CrudHandler {
 
   @OpenApi(
     path = "/api/v1/menus/:menu-id",
+    pathParams = @OpenApiParam(name="menu-id"),
     method = HttpMethod.PATCH,
     summary = "Update menu name, price, description, and image",
     operationId = "updateMenuV1",
     requestBody = @OpenApiRequestBody(content = @OpenApiContent(from = MenuModel.class)),
     responses = {@OpenApiResponse(status = "200", content = @OpenApiContent(from = MenuModel.class))}
   )
-  @Override
-  public void update(@NotNull Context context, @NotNull String s) {
+  public void update(@NotNull Context context) {
     MenuModel menu = context.bodyAsClass(MenuModel.class);
     this.service.update(menu);
     context.json(menu).status(200);
@@ -103,7 +102,6 @@ public class MenuHandler implements CrudHandler {
     operationId = "getAllMenusV1",
     responses = @OpenApiResponse(status = "200", content = @OpenApiContent(from = Pager.PagerMenu.class))
   )
-  @Override
   public void getAll(@NotNull Context context) {
     Pageable pageable = makePageable(context);
     Page<MenuModel> menus = service.findAll(pageable);
