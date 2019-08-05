@@ -131,7 +131,7 @@ public class MenuHandler implements CrudHandler {
 
 
   @OpenApi(
-    path = "/api/v1/checks",
+    path = "/api/v1/check",
     method = HttpMethod.GET,
     summary = "Get list menus items and their corresponded ordered quantities, prices, and total price of all .",
     operationId = "getAllCheckMenusV1",

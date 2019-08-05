@@ -15,6 +15,7 @@ menu and bill order management.
   we should update all related properties when start the application. Check the
   [Spring User Guide](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html)
   for more details.
+  ![Web UI sample](https://raw.githubusercontent.com/gaconkzk/restaurant/cotry/assets/rest-ui-01.png)
 
 ## Database models:
 ![Database models](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/gaconkzk/restaurant/cotry/db_schema.puml)
