@@ -15,7 +15,6 @@ menu and bill order management.
   we should update all related properties when start the application. Check the
   [Spring User Guide](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html)
   for more details.
-  ![Web UI sample](https://raw.githubusercontent.com/gaconkzk/restaurant/cotry/assets/rest-ui-01.png)
 
 ## Database models:
 ![Database models](http://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/gaconkzk/restaurant/cotry/db_schema.puml)
@@ -27,7 +26,8 @@ We plan to add more details into the API when improve it. For reading the REST A
 please use browser to browse to url `http://localhost:8088/docs` after build and start
 the service. We can also get the rest-api json using url `http://localhost:8088/docs/json`
 (generated using open-api v3).
-fix
+
+![Web UI sample](https://raw.githubusercontent.com/gaconkzk/restaurant/cotry/assets/rest-ui-01.png)
 
 ## Build and Start:
 This project is configured by using Gradle, so we can build/test/run the project easily
