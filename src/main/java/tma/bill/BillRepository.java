@@ -9,6 +9,4 @@ import java.util.Set;
 
 @Repository
 public interface BillRepository extends PagingAndSortingRepository<OrderModel, Integer> {
-  @Query(value = "select max(b.id) from bill b", nativeQuery = true)
-  Integer maxOrderNo();
 }

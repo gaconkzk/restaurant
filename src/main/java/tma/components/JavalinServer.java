@@ -66,7 +66,6 @@ public class JavalinServer {
   }
 
   public void routes() {
-    app.get("/", ctx -> ctx.result("Welcome to restaurant"));
     app.routes(() -> path("/api/v1", () -> {
       get("search/menus", this.menuHandler::search);
       get("/menus/check", this.menuHandler::check);
