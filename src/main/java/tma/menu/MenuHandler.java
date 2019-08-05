@@ -43,6 +43,7 @@ public class MenuHandler implements CrudHandler {
       context.json(menu).status(200);
     } catch (BadRequestResponse ex) {
       RestaurantApplication.LOG.error(ex.getMessage(), ex);
+      throw ex;
     }
   }
 
