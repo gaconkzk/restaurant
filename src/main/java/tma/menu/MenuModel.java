@@ -36,7 +36,7 @@ public class MenuModel {
     this.tags = String.join(",", tags);
   }
 
-  @OneToMany(mappedBy = "menu", cascade = CascadeType.MERGE)
+  @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL)
   @JsonIgnore
   private Set<OrderMenu> ordersMenus;
 

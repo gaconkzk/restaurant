@@ -20,7 +20,7 @@ public class Pager<T> {
   boolean last;
 
   public static class PagerMenu extends Pager<MenuModel> {}
-  public static class PagerBill extends Pager<Bill> {}
+  public static class PagerBill extends Pager<BillResponse> {}
 
   public static PagerMenu fromMenu(org.springframework.data.domain.Page<MenuModel> page) {
     PagerMenu p = new PagerMenu();
@@ -39,7 +39,7 @@ public class Pager<T> {
     p.page = page.getNumber() + 1;
     p.totalPages = page.getTotalPages();
     p.totalItems = (int) page.getTotalElements();
-    p.data = page.getContent().stream().map(Bill::fromModel).collect(Collectors.toList());
+    p.data = page.getContent().stream().map(BillResponse::fromModel).collect(Collectors.toList());
     p.first = page.isFirst();
     p.last = page.isLast();
 

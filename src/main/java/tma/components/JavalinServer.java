@@ -10,6 +10,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import tma.check.CheckHandler;
 import tma.RestaurantApplication;
 import tma.bill.BillHandler;
 import tma.menu.MenuHandler;
@@ -18,20 +19,25 @@ import tma.conf.RestaurantProperties;
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 @Component
-public class HttpServer {
+public class JavalinServer {
   private RestaurantProperties config;
 
   private MenuHandler menuHandler;
 
   private BillHandler billHandler;
 
+  private CheckHandler checkHandler;
+
   private Javalin app;
 
   @Autowired
-  public HttpServer(RestaurantProperties config, MenuHandler menuHandler, BillHandler billHandler) {
+  public JavalinServer(
+    RestaurantProperties config, MenuHandler menuHandler, BillHandler billHandler, CheckHandler checkHandler
+  ) {
     this.config = config;
     this.menuHandler = menuHandler;
     this.billHandler = billHandler;
+    this.checkHandler = checkHandler;
 
     this.app = Javalin.create(conf -> {
       conf.server(() -> {
@@ -65,13 +71,16 @@ public class HttpServer {
 
   public void routes() {
     app.get("/", ctx -> ctx.result("Welcome to restaurant"));
-    app.routes(() -> path("/api/v" + config.getApiVersion(), () -> {
+    app.routes(() -> path("/api/v1", () -> {
       get("search/menus", this.menuHandler::search);
       crud("menus/:menu-id", this.menuHandler);
-      get("bills", this.billHandler::getAll);
-      post("bills", this.billHandler::create);
-      patch("bills/:bill-id", this.billHandler::update);
-      get("bills/:bill-id", this.billHandler::getOne);
+
+      get("/bills", this.billHandler::getAll);
+      post("/bills", this.billHandler::create);
+      patch("/bills/:bill-id", this.billHandler::update);
+      get("/bills/:bill-id", this.billHandler::getOne);
+
+      get("/check", this.checkHandler::get);
     }));
   }
 }

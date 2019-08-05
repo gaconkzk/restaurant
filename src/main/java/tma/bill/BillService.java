@@ -34,11 +34,22 @@ public class BillService {
     return repository.findById(id);
   }
 
-  OrderModel create(OrderModel bill) {
+  OrderModel update(OrderModel bill) {
     try {
       if (bill.getId() == null) {
-        bill.setId(repository.maxOrderNo() + 1);
-      } else {
+        throw new BadRequestResponse("Bill order number not existed");
+      }
+
+      return repository.save(bill);
+    } catch (Exception ex) {
+      RestaurantApplication.LOG.error(ex.getMessage(), ex);
+      throw new InternalServerErrorResponse(ex.getMessage());
+    }
+  }
+
+  OrderModel create(OrderModel bill) {
+    try {
+      if (bill.getId() != null) {
         Optional<OrderModel> existed = repository.findById(bill.getId());
         if (existed.isPresent()) {
           throw new BadRequestResponse("Menu " + bill.getId() + " already existed.");

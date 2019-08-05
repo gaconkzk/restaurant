@@ -9,9 +9,12 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import tma.RestaurantApplication;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class MenuService {
@@ -60,7 +63,8 @@ public class MenuService {
     menuRepository.save(menu);
   }
 
-  Page<MenuModel> findAll(Pageable pageable) {
+  @Transactional
+  public Page<MenuModel> findAll(Pageable pageable) {
     return menuRepository.findAll(pageable);
   }
 
@@ -78,5 +82,11 @@ public class MenuService {
 
   public MenuModel findByName(String name) {
     return menuRepository.findByName(name);
+  }
+
+
+  @Transactional
+  public Set<MenuModel> getMenusByName(Set<String> names) {
+    return menuRepository.getAllMenuByName(names);
   }
 }

@@ -21,11 +21,20 @@ public class OrderModel {
   @OneToMany(mappedBy = "order", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
   private Set<OrderMenu> ordersMenus = new HashSet<>();
 
+  public OrderModel(OrderMenu ... boms) {
+    updateRelationship(boms, Stream.of(boms));
+  }
+
   public OrderModel(Integer orderNo, OrderMenu... boms) {
     this.id = orderNo;
+    updateRelationship(boms, Stream.of(boms));
+  }
+
+  private void updateRelationship(OrderMenu[] boms, Stream<OrderMenu> boms2) {
     for (OrderMenu bom : boms) {
       bom.setOrder(this);
     }
-    this.ordersMenus = Stream.of(boms).collect(Collectors.toSet());
+    this.ordersMenus = boms2.collect(Collectors.toSet());
   }
+
 }

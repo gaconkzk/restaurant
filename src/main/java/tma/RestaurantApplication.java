@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import tma.components.DBInitializer;
-import tma.components.HttpServer;
+import tma.components.JavalinServer;
 import tma.conf.RestaurantProperties;
 
 @SpringBootApplication
@@ -17,7 +17,7 @@ public class RestaurantApplication implements CommandLineRunner {
   public static final Logger LOG = LoggerFactory.getLogger(RestaurantApplication.class);
 
   @Autowired
-  HttpServer server;
+  JavalinServer server;
 
   @Autowired
   DBInitializer db;
