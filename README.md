@@ -8,7 +8,7 @@ menu and bill order management.
 - PostgresSQL Database (detail in `docker/docker-compose.yml`)
   
   - We can use docker-compose to start sample database (configured `yml` file above).
-  - Or we can install and the database by ourselves (The database must be started
+  - Or we can install the database by ourselves (The database must be started
   before this server).
   
   PS: If our database configuration are different with the ones in docker-compose, 
